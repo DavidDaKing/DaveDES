@@ -1,0 +1,2 @@
+# DaveDES
+Proper DES specifications
