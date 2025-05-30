@@ -16,6 +16,7 @@ The program covers
 For now. 
 
 ## References:  
+- [Algoritm details](https://page.math.tu-berlin.de/~kant/teaching/hess/krypto-ws2006/des.htm)
 
 ## Author:
 - [@David Bower](https://www.github.com/DavidDaKing)
