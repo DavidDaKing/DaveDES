@@ -9,9 +9,9 @@ DES encrypts its content in blocks. There are different modes of
 operation for cipher block encryptions.
 
 The program covers 
-EBC: For each plaintext block, there is a matching cipher text block
+- EBC: For each plaintext block, there is a matching cipher text block
 
-CBC: The cipher text output is based on the plaintext input and a previous cipher block or an initialization vector XOR'd together. 
+- CBC: The cipher text output is based on the plaintext input and a previous cipher block or an initialization vector XOR'd together. 
 
 For now. 
 
