@@ -54,7 +54,7 @@ First permutation function for the key scheduler:
 def firstPermKS(key):
     permKey = []
 
-    permKey = [key[i] for i in keyPerm1]
+    permKey = [key[i-1] for i in keyPerm1]
 
     return permKey
 
@@ -85,10 +85,8 @@ def secondPermKS(c, d):
     subKey = []
     subKey += c
     subKey += d
-    print(len(c))
-    print(len(d))
-    print(len(subKey))
-    lowKey = [subKey[i] for i in keyPerm2]
+
+    lowKey = [subKey[i-1] for i in keyPerm2]
 
     return lowKey
 
@@ -190,7 +188,6 @@ def main():
     # calling key scheduler
     # subkeys defined here
     k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16 = keyScheduler(symmetricKey)
-    print(k13)
 
 if __name__ == "__main__":
     main()
