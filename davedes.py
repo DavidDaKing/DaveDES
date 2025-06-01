@@ -31,6 +31,19 @@ keyPerm2 = [14, 17, 11, 24, 1, 5,
     44, 49, 39, 56, 34, 53,
     46, 42, 50, 36, 29, 32]
 
+# Initial Permutation Array
+IP = [
+    58, 50, 42, 34, 26, 18, 10, 2,
+    60, 52, 44, 36, 28, 20, 12, 4,
+    62, 54, 46, 38, 30, 22, 14, 6,
+    64, 56, 48, 40, 32, 24, 16, 8,
+    57, 49, 41, 33, 25, 17, 9, 1,
+    59, 51, 43, 35, 27, 19, 11, 3,
+    61, 53, 45, 37, 29, 21, 13, 5,
+    63, 55, 47, 39, 31, 23, 15, 7
+]
+
+
 """
 I want to start the source code off with the key.
 
@@ -176,6 +189,18 @@ def keyScheduler(key):
 
     return k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16
 
+"""
+Key scheduler is over
+
+Onto the DES algorithm for 64 bits/block data 
+Below, defines the helper functions to do so. 
+
+DES Algorithm process:
+    -The message block goes through Initial Permutation
+    -Break in half, goes through XORs and Cipher Functions
+
+"""
+
 def main():
     # This is the global, symmetric key.. All encryption and decryption for DES is done through here..
     # assinged 64 bits - 5/30
@@ -188,6 +213,10 @@ def main():
     # calling key scheduler
     # subkeys defined here
     k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16 = keyScheduler(symmetricKey)
+
+    #
+
+
 
 if __name__ == "__main__":
     main()
