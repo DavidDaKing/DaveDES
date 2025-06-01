@@ -201,6 +201,13 @@ DES Algorithm process:
 
 """
 
+def initPerm(messBlock):
+    return [messBlock[i-1] for i in IP]
+
+def DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16):
+    # Init Perm
+    messIP = initPerm(message)
+
 def main():
     # This is the global, symmetric key.. All encryption and decryption for DES is done through here..
     # assinged 64 bits - 5/30
