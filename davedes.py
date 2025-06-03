@@ -22,6 +22,7 @@ keyPerm1 = [57, 49, 41, 33, 25, 17, 9,
               14,    6,    61,   53,    45,    37,   29,
               21,   13,     5,   28,    20,    12,    4]
 
+# Second Key Permutation array
 keyPerm2 = [14, 17, 11, 24, 1, 5,
     3, 28, 15, 6, 21, 10,
     23, 19, 12, 4, 26, 8,
@@ -43,6 +44,71 @@ IP = [
     63, 55, 47, 39, 31, 23, 15, 7
 ]
 
+
+# The E expansion table
+eExp = [
+    32, 1, 2, 3, 4, 5,
+    4, 5, 6, 7, 8, 9,
+    8, 9, 10, 11, 12, 13,
+    12, 13, 14, 15, 16, 17,
+    16, 17, 18, 19, 20, 21,
+    20, 21, 22, 23, 24, 25,
+    24, 25, 26, 27, 28, 29,
+    28, 29, 30, 31, 32, 1
+]
+
+# The next 8 global arrays are the selection bit tables
+s1 = [
+    [14, 4, 13, 1, 2, 15, 11, 8, 3, 10, 6, 12, 5, 9, 0, 7],
+    [0, 15, 7, 4, 14, 2, 13, 1, 10, 6, 12, 11, 9, 5, 3, 8],
+    [4, 1, 14, 8, 13, 6, 2, 11, 15, 12, 9, 7, 3, 10, 5, 0],
+    [15, 12, 8, 2, 4, 9, 1, 7, 5, 11, 3, 14, 10, 0, 6, 13]
+]
+
+s2 = [
+    [15, 1, 8, 14, 6, 11, 3, 4, 9, 7, 2, 13, 12, 0, 5, 10],
+    [3, 13, 4, 7, 15, 2, 8, 14, 12, 0, 1, 10, 6, 9, 11, 5],
+    [0, 14, 7, 11, 10, 4, 13, 1, 5, 8, 12, 6, 9, 3, 2, 15],
+    [13, 8, 10, 1, 3, 15, 4, 2, 11, 6, 7, 12, 0, 5, 14, 9]
+]
+
+
+s3 = [
+    [10, 0, 9, 14, 6, 3, 15, 5, 1, 13, 12, 7, 11, 4, 2, 8],
+    [13, 7, 0, 9, 3, 4, 6, 10, 2, 8, 5, 14, 12, 11, 15, 1],
+    [13, 6, 4, 9, 8, 15, 3, 0, 11, 1, 2, 12, 5, 10, 14, 7],
+    [1, 10, 13, 0, 6, 9, 8, 7, 4, 15, 14, 3, 11, 5, 2, 12]
+]
+s4 = [
+    [7, 13, 14, 3, 0, 6, 9, 10, 1, 2, 8, 5, 11, 12, 4, 15],
+    [13, 8, 11, 5, 6, 15, 0, 3, 4, 7, 2, 12, 1, 10, 14, 9],
+    [10, 6, 9, 0, 12, 11, 7, 13, 15, 1, 3, 14, 5, 2, 8, 4],
+    [3, 15, 0, 6, 10, 1, 13, 8, 9, 4, 5, 11, 12, 7, 2, 14]
+]
+s5 = [
+    [2, 12, 4, 1, 7, 10, 11, 6, 8, 5, 3, 15, 13, 0, 14, 9],
+    [14, 11, 2, 12, 4, 7, 13, 1, 5, 0, 15, 10, 3, 9, 8, 6],
+    [4, 2, 1, 11, 10, 13, 7, 8, 15, 9, 12, 5, 6, 3, 0, 14],
+    [11, 8, 12, 7, 1, 14, 2, 13, 6, 15, 0, 9, 10, 4, 5, 3]
+]
+s6 = [
+    [12, 1, 10, 15, 9, 2, 6, 8, 0, 13, 3, 4, 14, 7, 5, 11],
+    [10, 15, 4, 2, 7, 12, 9, 5, 6, 1, 13, 14, 0, 11, 3, 8],
+    [9, 14, 15, 5, 2, 8, 12, 3, 7, 0, 4, 10, 1, 13, 11, 6],
+    [4, 3, 2, 12, 9, 5, 15, 10, 11, 14, 1, 7, 6, 0, 8, 13]
+]
+s7 = [
+    [4, 11, 2, 14, 15, 0, 8, 13, 3, 12, 9, 7, 5, 10, 6, 1],
+    [13, 0, 11, 7, 4, 9, 1, 10, 14, 3, 5, 12, 2, 15, 8, 6],
+    [1, 4, 11, 13, 12, 3, 7, 14, 10, 15, 6, 8, 0, 5, 9, 2],
+    [6, 11, 13, 8, 1, 4, 10, 7, 9, 5, 0, 15, 14, 2, 3, 12]
+]
+s8 = [
+    [13, 2, 8, 4, 6, 15, 11, 1, 10, 9, 3, 14, 5, 0, 12, 7],
+    [1, 15, 13, 8, 10, 3, 7, 4, 12, 5, 6, 11, 0, 14, 9, 2],
+    [7, 11, 4, 1, 9, 12, 14, 2, 0, 6, 10, 13, 15, 3, 5, 8],
+    [2, 1, 14, 7, 4, 10, 8, 13, 15, 12, 9, 0, 3, 5, 6, 11]
+]
 
 """
 I want to start the source code off with the key.
@@ -222,12 +288,95 @@ def XOR(firstArr, secondArr):
 
 # Expansion function defined here
 def expandThis(msg):
-    return
+    # Takes in 32 bits and expands into 48 bits
+    return [msg[i-1] for i in eExp]
 
+# Selection process: takes a 48 bit message
+# For each group of 6 bits, the selection table is performed
+# G1 -> s1, g2 -> s2 ... g8 -> s8
+def selectionProc(msg):
+    sMessage = []
+
+    # message groups, 
+    m1 = [] 
+    m2 = []
+    m3 = []
+    m4 = []
+    m5 = []
+    m6 = []
+    m7 = []
+    m8 = []
+
+    for i in range(0, len(msg), 6):
+        if i == 0:
+            m1.append(msg[i:i+6])
+        if i == 6:
+            m2.append(msg[i:i+6])
+        if i == 12:
+            m3.append(msg[i:i+6])
+        if i == 18:
+            m4.append(msg[i:i+6])
+        if i == 24:
+            m5.append(msg[i:i+6])       
+        if i == 30:
+            m6.append(msg[i:i+6])
+        if i == 36:
+            m7.append(msg[i:i+6])
+        if i == 42:
+            m8.append(msg[i:i+6])
+
+    #m5 = ''.join(map(str, m5))
+    #m5 = ''.join(map(str, m5))
+    #print("m5", m5)
+
+    m1 = ''.join(map(str, m1))
+    m1 = ''.join(map(str, m1))
+    print("m1", m1)
+    # For each message list, take the first and last bit
+    # Thats the row
+    # Take the middle four bits
+    # Thats the col
+
+    # Maybe I can use a translator bit -> decimal 
+    # Once the translation is done on the S table, append it to
+    # S Message
+
+    for i in range(1, 9):
+        #Stores first and last bits
+        bit1 = []
+        #Stores middle four
+        bit2 = []
+        if i == 1:
+            bit1.append(m1[0])
+            bit1.append(m1[-1])
+            for j in range(1, 5):
+                print('')
+                #bit2.append(m1[j])
+            print("b1", bit1)
+            print("b2", bit2)
+
+    return sMessage
 
 # Cipher function defined here
-def cipherFunc(right):
-    return
+def cipherFunc(right, key):
+    eRight = expandThis(right)
+
+    # debugging statements
+    #right = ''.join(map(str, right))
+    #eRight = ''.join(map(str, eRight))
+    #print("This is right", right)
+    #print("This is expanded", eRight)
+    
+    # Xor the expanded right message w/ the key
+    xRight = XOR(eRight, key)
+
+    # Selection process for each group of 6 bits of xRight
+    # Eight different selection tables, first bit and last bit determines row
+    # The middle four bits determine the col 
+    # So if the 6 bits are 101010 ROW: 10 = 2 COL: 0101 = 5
+    # If this was placed in the first table, the value is: 6
+    sRight = selectionProc(xRight)
+
 
 
 def DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16):
@@ -246,6 +395,7 @@ def DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k1
     #print("right", r0)
 
     # Cipher function!
+    cipherFunc(r0, k1)
 
     
 
