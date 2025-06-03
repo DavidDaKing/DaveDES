@@ -355,16 +355,16 @@ def selectionProc(msg):
 
     listOList = [m1, m2, m3, m4, m5, m6, m7, m8]
 
-    for i in range(1, 9):
+    for i in range(len(listOList)):
         #Stores first and last bits
         bit1 = []
         #Stores middle four
         bit2 = []
-        bit1.append(listOList[i[0]])
-        bit1.append(listOList[i[-1]])
+        bit1.append(listOList[i][0])
+        bit1.append(listOList[i][-1])
         for j in range(1, 5):
             #print(m1[j])
-            bit2.append(m1[j])
+            bit2.append(listOList[i][j])
 
         # Convert binary -> decimal
         # B1 = row B2 = col
