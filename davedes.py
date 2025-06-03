@@ -200,13 +200,43 @@ DES Algorithm process:
     -Break in half, goes through XORs and Cipher Functions
 
 """
-
+# Inital permuation function 
 def initPerm(messBlock):
     return [messBlock[i-1] for i in IP]
+
+# Simple XOR function for DES cipher operations on two bit arrays
+def XOR(firstArr, secondArr):
+    retArr = []
+    if len(firstArr) == len(secondArr):
+        for i in range(len(firstArr)):
+            if firstArr[i] != secondArr[i]:
+                retArr.append(1)
+            else:
+                retArr.append(0)
+        # returning the appended array
+        return retArr
+    else:
+        print("XOR ERROR: Sizes do not match!")
 
 def DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16):
     # Init Perm
     messIP = initPerm(message)
+
+    # This line prevents weird formatting
+    messIP = ''.join(map(str, messIP))
+    #print("This is IP mess", messIP)
+
+    # Now, split the messIP array in half..
+    # Built this function for the keys, but works for message
+    # Mr left, mr right: Init LR
+    l0, r0 = splitArray(messIP)
+    print("left", l0)
+    print("right", r0)
+
+    # Not apart of algo, just for testing purposes
+    out = XOR(l0,r0)
+    print("This is the ouput", out)
+
 
 def main():
     # This is the global, symmetric key.. All encryption and decryption for DES is done through here..
@@ -221,8 +251,18 @@ def main():
     # subkeys defined here
     k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16 = keyScheduler(symmetricKey)
 
-    #
+    # For now the secret message will be pre defined by the computer,
+    message = []
+    for i in range(64):
+        if i % 3 == 0:
+            message.append(0)
+        else:
+            message.append(1)
 
+    #print("Here is the user message: ", message)
+
+    # I want to build the algorithm first, then add features such as user input, and 3DES. 
+    DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16)
 
 
 if __name__ == "__main__":
