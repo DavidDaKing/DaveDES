@@ -113,10 +113,15 @@ s8 = [
 """
 Conversion functions:
     -binary -> decimal
+    -decimal -> binary
 """
 
 def bin2Dec(msg):
     return int(msg, 2)
+
+def dec2Bin(num):
+    # 2: gets rid of the 0b output
+    return bin(num)[2:]
 
 """
 I want to start the source code off with the key.
@@ -355,6 +360,8 @@ def selectionProc(msg):
 
     listOList = [m1, m2, m3, m4, m5, m6, m7, m8]
 
+    listOtab = [s1, s2, s3, s4, s5, s6, s7, s8]
+
     for i in range(len(listOList)):
         #Stores first and last bits
         bit1 = []
@@ -372,10 +379,19 @@ def selectionProc(msg):
         bit2 = ''.join(map(str,bit2))
         dec1 = bin2Dec(bit1)
         dec2 = bin2Dec(bit2)
-        print(dec1)
-        print(dec2)
-        # Reconvert decimal -> binary 
 
+        # Now that I have row and col vals
+        # I will perform the S lookup
+        conVal = listOtab[i][dec1][dec2]
+
+        conVal = dec2Bin(conVal)
+
+        if conVal == 0:
+            conVal = [0, 0, 0, 0]
+
+        conVal = ''.join(map(str,conVal))
+        sMessage.append(conVal)
+        
     return sMessage
 
 # Cipher function defined here
@@ -396,6 +412,16 @@ def cipherFunc(right, key):
     # The middle four bits determine the col 
     # So if the 6 bits are 101010 ROW: 10 = 2 COL: 0101 = 5
     # If this was placed in the first table, the value is: 6
+
+    testVal = [0,1,1,0,0,0,0,1,0,0,0,1,0,1,1,1,1,0,1,1,1,0,1,0,1,0,0,0,0,1,1,0,0,1,1,0,0,1,0,1,0,0,1,0,0,1,1,1]
+
+    testPls = selectionProc(testVal)
+
+    print("This is test", testPls)
+
+    print("length of testVal", len(testVal))
+    print("length of pls", len(testPls))
+
     sRight = selectionProc(xRight)
 
 
@@ -427,7 +453,7 @@ def main():
     randomInt = random.getrandbits(64)
     symmetricKey = format(randomInt, '064b')
 
-    print("Here is the generated symmetric key: ", symmetricKey)
+    #print("Here is the generated symmetric key: ", symmetricKey)
 
     # Additional keys may be generated for double or triple encryption...
     # calling key scheduler
