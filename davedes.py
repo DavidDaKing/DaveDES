@@ -208,6 +208,7 @@ def initPerm(messBlock):
 def XOR(firstArr, secondArr):
     retArr = []
     if len(firstArr) == len(secondArr):
+        # Addition operation in the group of mod 2
         for i in range(len(firstArr)):
             if firstArr[i] != secondArr[i]:
                 retArr.append(1)
@@ -217,6 +218,17 @@ def XOR(firstArr, secondArr):
         return retArr
     else:
         print("XOR ERROR: Sizes do not match!")
+
+
+# Expansion function defined here
+def expandThis(msg):
+    return
+
+
+# Cipher function defined here
+def cipherFunc(right):
+    return
+
 
 def DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16):
     # Init Perm
@@ -230,12 +242,12 @@ def DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k1
     # Built this function for the keys, but works for message
     # Mr left, mr right: Init LR
     l0, r0 = splitArray(messIP)
-    print("left", l0)
-    print("right", r0)
+    #print("left", l0)
+    #print("right", r0)
 
-    # Not apart of algo, just for testing purposes
-    out = XOR(l0,r0)
-    print("This is the ouput", out)
+    # Cipher function!
+
+    
 
 
 def main():
