@@ -384,7 +384,7 @@ def selectionProc(msg):
         # I will perform the S lookup
         conVal = listOtab[i][dec1][dec2]
 
-        conVal = dec2Bin(conVal)
+        conVal = dec2Bin(conVal).zfill(4)
 
         if conVal == 0:
             conVal = [0, 0, 0, 0]
@@ -416,6 +416,7 @@ def cipherFunc(right, key):
     testVal = [0,1,1,0,0,0,0,1,0,0,0,1,0,1,1,1,1,0,1,1,1,0,1,0,1,0,0,0,0,1,1,0,0,1,1,0,0,1,0,1,0,0,1,0,0,1,1,1]
 
     testPls = selectionProc(testVal)
+    testPls = ''.join(map(str,testPls))
 
     print("This is test", testPls)
 
