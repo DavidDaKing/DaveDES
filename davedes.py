@@ -111,6 +111,14 @@ s8 = [
 ]
 
 """
+Conversion functions:
+    -binary -> decimal
+"""
+
+def bin2Dec(msg):
+    return int(msg, 2)
+
+"""
 I want to start the source code off with the key.
 
 In later versions of this program, I want the user to have the ability to write their own 56 bit keys. For now, I would ask the program to 
@@ -325,13 +333,17 @@ def selectionProc(msg):
         if i == 42:
             m8.append(msg[i:i+6])
 
-    #m5 = ''.join(map(str, m5))
-    #m5 = ''.join(map(str, m5))
-    #print("m5", m5)
+    # For some reason, the messages come to a double list
+    # I want just a singular list, these lines help with that
+    m1 = m1[0]
+    m2 = m2[0]
+    m3 = m3[0]
+    m4 = m4[0]
+    m5 = m5[0]
+    m6 = m6[0]
+    m7 = m7[0]
+    m8 = m8[0]
 
-    m1 = ''.join(map(str, m1))
-    m1 = ''.join(map(str, m1))
-    print("m1", m1)
     # For each message list, take the first and last bit
     # Thats the row
     # Take the middle four bits
@@ -350,10 +362,19 @@ def selectionProc(msg):
             bit1.append(m1[0])
             bit1.append(m1[-1])
             for j in range(1, 5):
-                print('')
-                #bit2.append(m1[j])
-            print("b1", bit1)
-            print("b2", bit2)
+                #print(m1[j])
+                bit2.append(m1[j])
+
+            # Convert binary -> decimal
+            # B1 = row B2 = col
+            bit1 = ''.join(map(str,bit1))
+            bit2 = ''.join(map(str,bit2))
+            dec1 = bin2Dec(bit1)
+            dec2 = bin2Dec(bit2)
+            print(bit1)
+            print("n1", dec1)
+            print(bit2)
+            print("n2", dec2)
 
     return sMessage
 
