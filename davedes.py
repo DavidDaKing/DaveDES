@@ -541,22 +541,24 @@ def DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k1
 
     # Inverse permutation time
     cMes = ''.join(map(str, cMes))
-    cMes = IP(cMes)
+    cMes = invPerm(cMes)
     return cMes
     
-
-
-
     
 
 
 def main():
     # This is the global, symmetric key.. All encryption and decryption for DES is done through here..
     # assinged 64 bits - 5/30
-    randomInt = random.getrandbits(64)
-    symmetricKey = format(randomInt, '064b')
+    symmetricKey = [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1,
+    0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1,
+    1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1,
+    1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1]
 
-    #print("Here is the generated symmetric key: ", symmetricKey)
+    symmetricKey = ''.join(map(str, symmetricKey))
+
+
+    print("Here is the generated symmetric key: ", symmetricKey)
 
     # Additional keys may be generated for double or triple encryption...
     # calling key scheduler
@@ -564,17 +566,26 @@ def main():
     k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16 = keyScheduler(symmetricKey)
 
     # For now the secret message will be pre defined by the computer,
-    message = []
-    for i in range(64):
-        if i % 3 == 0:
-            message.append(0)
-        else:
-            message.append(1)
-
-    #print("Here is the user message: ", message)
+    message = [
+    0, 0, 0, 1, 0, 0, 1, 1,
+    0, 0, 1, 1, 0, 1, 0, 0,
+    0, 1, 0, 1, 0, 1, 1, 1,
+    0, 1, 1, 1, 1, 0, 0, 1,
+    1, 0, 0, 1, 1, 0, 1, 1,
+    1, 0, 1, 1, 1, 1, 0, 0,
+    1, 1, 0, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 0, 0, 0, 1
+]
+    message = ''.join(map(str, message))
+    print("Here is the user message: ", message)
 
     # I want to build the algorithm first, then add features such as user input, and 3DES. 
     cMes = DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16)
+
+    cMes = ''.join(map(str, cMes))
+
+
+    print("Encrypted Message", cMes)
 
 
 if __name__ == "__main__":
