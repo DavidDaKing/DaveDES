@@ -123,6 +123,16 @@ p32 = [
     22, 11, 4, 25
 ]
 
+IP = [
+    40, 8, 48, 16, 56, 24, 64, 32,
+    39, 7, 47, 15, 55, 23, 63, 31,
+    38, 6, 46, 14, 54, 22, 62, 30,
+    37, 5, 45, 13, 53, 21, 61, 29,
+    36, 4, 44, 12, 52, 20, 60, 28,
+    35, 3, 43, 11, 51, 19, 59, 27,
+    34, 2, 42, 10, 50, 18, 58, 26,
+    33, 1, 41, 9, 49, 17, 57, 25
+]
 """
 Conversion functions:
     -binary -> decimal
@@ -451,8 +461,11 @@ def cipherFunc(right, key):
     # Go through a 32-bit permutation
     sRight = perm32(sRight)
 
+    return sRight
 
 
+def invPerm(msg):
+    return [msg[i-1] for i in IP]
 
 
 
@@ -472,7 +485,67 @@ def DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k1
     #print("right", r0)
 
     # Cipher function!
-    cipherFunc(r0, k1)
+    l1 = r0
+    r1 = XOR(l0, cipherFunc(r0, k1))
+
+    l2 = r1
+    r2 = XOR(l1, cipherFunc(r1, k2))
+
+    l3 = r2
+    r3 = XOR(l2, cipherFunc(r2, k3))
+
+    l4 = r3
+    r4 = XOR(l3, cipherFunc(r3, k4))
+
+    l5 = r4
+    r5 = XOR(l4, cipherFunc(r4, k5))
+
+    l6 = r5
+    r6 = XOR(l5, cipherFunc(r5, k6))
+
+    l7 = r6
+    r7 = XOR(l6, cipherFunc(r6, k7))
+
+    l8 = r7
+    r8 = XOR(l7, cipherFunc(r7, k8))
+
+    l9 = r8
+    r9 = XOR(l8, cipherFunc(r8, k9))
+
+    l10 = r9
+    r10 = XOR(l9, cipherFunc(r9, k10))
+
+    l11 = r10
+    r11 = XOR(l10, cipherFunc(r10, k11))
+
+    l12 = r11
+    r12 = XOR(l11, cipherFunc(r11, k12))
+
+    l13 = r12
+    r13 = XOR(l12, cipherFunc(r12, k13))
+
+    l14 = r13
+    r14 = XOR(l13, cipherFunc(r13, k14))
+
+    l15 = r14
+    r15 = XOR(l14, cipherFunc(r14, k15))
+
+    l16 = r15
+    r16 = XOR(l15, cipherFunc(r15, k16))
+
+    cMes = []
+    cMes += l16
+    cMes += r16
+
+
+
+    # Inverse permutation time
+    cMes = ''.join(map(str, cMes))
+    cMes = IP(cMes)
+    return cMes
+    
+
+
 
     
 
@@ -501,7 +574,7 @@ def main():
     #print("Here is the user message: ", message)
 
     # I want to build the algorithm first, then add features such as user input, and 3DES. 
-    DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16)
+    cMes = DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16)
 
 
 if __name__ == "__main__":
