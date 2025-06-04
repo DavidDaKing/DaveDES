@@ -110,6 +110,19 @@ s8 = [
     [2, 1, 14, 7, 4, 10, 8, 13, 15, 12, 9, 0, 3, 5, 6, 11]
 ]
 
+
+# 32 bit permutation table
+p32 = [
+    16, 7, 20, 21,
+    29, 12, 28, 17,
+    1, 15, 23, 26,
+    5, 18, 31, 10,
+    2, 8, 24, 14,
+    32, 27, 3, 9,
+    19, 13, 30, 6,
+    22, 11, 4, 25
+]
+
 """
 Conversion functions:
     -binary -> decimal
@@ -386,6 +399,8 @@ def selectionProc(msg):
 
         conVal = dec2Bin(conVal).zfill(4)
 
+        # May not be necessary since I fill all with zeros,
+        # But if conVal is 0 it fills the rest of the bits w/ zero
         if conVal == 0:
             conVal = [0, 0, 0, 0]
 
@@ -393,6 +408,9 @@ def selectionProc(msg):
         sMessage.append(conVal)
         
     return sMessage
+
+def perm32(msg):
+    return [msg[i-1] for i in p32] 
 
 # Cipher function defined here
 def cipherFunc(right, key):
@@ -413,17 +431,28 @@ def cipherFunc(right, key):
     # So if the 6 bits are 101010 ROW: 10 = 2 COL: 0101 = 5
     # If this was placed in the first table, the value is: 6
 
-    testVal = [0,1,1,0,0,0,0,1,0,0,0,1,0,1,1,1,1,0,1,1,1,0,1,0,1,0,0,0,0,1,1,0,0,1,1,0,0,1,0,1,0,0,1,0,0,1,1,1]
+    #testVal = [0,1,1,0,0,0,0,1,0,0,0,1,0,1,1,1,1,0,1,1,1,0,1,0,1,0,0,0,0,1,1,0,0,1,1,0,0,1,0,1,0,0,1,0,0,1,1,1]
 
-    testPls = selectionProc(testVal)
-    testPls = ''.join(map(str,testPls))
+    #testPls = selectionProc(testVal)
+    #testPls = ''.join(map(str,testPls))
 
-    print("This is test", testPls)
+    #print("This is test", testPls)
 
-    print("length of testVal", len(testVal))
-    print("length of pls", len(testPls))
+    #print("length of testVal", len(testVal))
+    #print("length of pls", len(testPls))
+
+    # This matches the documentation cited under references. 
 
     sRight = selectionProc(xRight)
+    sRight = ''.join(map(str,sRight))
+    #print(sRight)
+    
+    # Now that the selection process is done, the message needs to
+    # Go through a 32-bit permutation
+    sRight = perm32(sRight)
+
+
+
 
 
 
