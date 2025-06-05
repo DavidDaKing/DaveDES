@@ -569,26 +569,6 @@ def DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k1
 
 # String to binary conversion for user input
 
-def stringToBin(msg):
-    binary = msg.encode('utf-8')
-
-    intVal = int.from_bytes(binary, byteorder='big')
-    strVal = format(intVal, '064b')
-    #binary.zfill(64)
-    return strVal[-64:]
-
-
-def binToString(msg):
-    #make sure its passed in as a string
-    intVal = int(msg,2)
-
-    n = 8
-    byteVal = intVal.to_bytes(n, byteorder='big')
-
-    conv = byteVal.lstrip(b'\x00').decode('utf-8', errors='ignore')
-
-    return conv
-
 
 def main():
 
@@ -600,6 +580,7 @@ def main():
         # Show options
         print("~~~~~~~~~~~~~")
         print("1 : Run the Simulation")
+        print("2 : Encrypt a message with a secret key")
         print("0 : Exit DaveDES")
         print("~~~~~~~~~~~~~")
         uOption = int(input("Enter option here: "))
@@ -641,30 +622,19 @@ def main():
 
             if dMes == message:
                 print("test passed!")
+
+
+        if uOption == 2:
+            uSec = input("Enter a secret key: ")
+            print(uSec)
+            uMes = input("Enter the message: ")
+            print(uMes)
     
 
-        if uOption != 0 and uOption != 1:
+        if uOption != 0 and uOption != 1 and uOption != 2:
             print(f"{uOption} is not an option, try again.")
 
         # User input section
-        '''
-        secret = input("Input your secret key: ")
-        secret = stringToBin(secret)
-
-        uMsg = input("Input the message you want to send: ")
-        uMsg = stringToBin(uMsg)
-
-        k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16 = keyScheduler(secret)
-
-        enc = DES(uMsg, k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16)
-        print("Encrypted message: ", ''.join(map(str,enc)))
-
-        # auto decrypt , moment of truth
-        dec = DES(enc, k16,k15,k14,k13,k12,k11,k10,k9,k8,k7,k6,k5,k4,k3,k2,k1)
-        dec = ''.join(map(str,dec))
-        dec = binToString(dec)
-        print("Decrypted message: ", dec)
-        '''
     
 
 
