@@ -414,7 +414,7 @@ def selectionProc(msg):
         if conVal == 0:
             conVal = [0, 0, 0, 0]
 
-        conVal = ''.join(map(str,conVal))
+        #conVal = ''.join(map(str,conVal))
         sMessage.append(conVal)
         
     return sMessage
@@ -448,29 +448,34 @@ def cipherFunc(right, key):
         #print("test passed!")
 
     sRight = selectionProc(xRight)
-    sRight = ''.join(map(str,sRight))
+    #sRight = ''.join(map(str,sRight))
     #print(sRight)
 
     # Testing S selection process - PASSED
 
     sTest = selectionProc(testOut)
-    sTest = ''.join(map(str,sTest))
+    #sTest = ''.join(map(str,sTest))
     expS = [0,1,0,1, 1,1,0,0, 1,0,0,0, 0,0,1,0, 1,0,1,1, 0,1,0,1, 1,0,0,1, 0,1,1,1]   
-    expS = ''.join(map(str,expS))
+    #expS = ''.join(map(str,expS))
 
     #if sTest == expS:
         #print("test passed!")
     # Now that the selection process is done, the message needs to
     # Go through a 32-bit permutation
+    #sRight = ''.join(map(int,sRight))
+    #print(sRight)
+
+    sRight = [int(bit) for binary in sRight for bit in binary]
+
     sRight = perm32(sRight)
 
     # Permutation test - PASSED
-    expPerm = [0,0,1,0, 0,0,1,1, 0,1,0,0, 1,0,1,0, 1,0,1,0, 1,0,0,1, 1,0,1,1, 1,0,1,1]
-    sTest = perm32(sTest)
-    sTest = ''.join(map(str,sTest))
+    #expPerm = [0,0,1,0, 0,0,1,1, 0,1,0,0, 1,0,1,0, 1,0,1,0, 1,0,0,1, 1,0,1,1, 1,0,1,1]
+    #sTest = perm32(sTest)
+    #sTest = ''.join(map(str,sTest))
     #print(sTest)
 
-    expPerm = ''.join(map(str,expPerm))
+    #expPerm = ''.join(map(str,expPerm))
 
     #if sTest == expPerm:
         #print("test passed")
@@ -487,7 +492,7 @@ def invPerm(msg):
 def DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16):
     # Init Perm
     messIP = initPerm(message)
-    messIP = ''.join(map(str,messIP))
+    #messIP = ''.join(map(str,messIP))
     #print("initial perm val: ", messIP)
 
     # Now, split the messIP array in half..
@@ -555,7 +560,7 @@ def DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k1
 
 
     # Inverse permutation time
-    cMes = ''.join(map(str, cMes))
+    #cMes = ''.join(map(str, cMes))
     cMes = invPerm(cMes)
 
     return cMes
@@ -568,10 +573,10 @@ def main():
     # assinged 64 bits - 5/30
     symmetricKey = [0,0,0,1,0,0,1,1,0,0,1,1,0,1,0,0,0,1,0,1,0,1,1,1,0,1,1,1,1,0,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1,1,0,0,1,1,0,1,1,1,1,1,1,1,1,1,0,0,0,1]
 
-    symmetricKey = ''.join(map(str, symmetricKey))
+    #symmetricKey = ''.join(map(str, symmetricKey))
 
     #print("len key", len(symmetricKey))
-    print("Here is the generated symmetric key: ", symmetricKey)
+    print("Here is the generated symmetric key: ", ''.join(map(str,symmetricKey)))
 
     # Additional keys may be generated for double or triple encryption...
     # calling key scheduler
@@ -583,14 +588,13 @@ def main():
 
     # Debugging loop for key scheduler
     # Comment out if you wanna save run time O(n)
-    for i in range(len(listofSub)):
-        listofSub[i] = ''.join(map(str, listofSub[i]))
-        #print(f"subkey {i}: ", listofSub[i])
+   # for i in range(len(listofSub)):
+    #      print(f"subkey{i}: {''.join(map(str, listofSub[i]))}")
 
     # For now the secret message will be pre defined by the computer,
     message = [0,0,0,0, 0,0,0,1, 0,0,1,0, 0,0,1,1, 0,1,0,0, 0,1,0,1, 0,1,1,0, 0,1,1,1, 1,0,0,0, 1,0,0,1, 1,0,1,0, 1,0,1,1, 1,1,0,0, 1,1,0,1, 1,1,1,0, 1,1,1,1]
-    message = ''.join(map(str, message))
-    print("Here is the user message: ", message)
+    #message = ''.join(map(str, message))
+    #print("Here is the user message: ", message)
 
     # I want to build the algorithm first, then add features such as user input, and 3DES. 
     cMes = DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16)
