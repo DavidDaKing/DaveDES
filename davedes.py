@@ -123,7 +123,7 @@ p32 = [
     22, 11, 4, 25
 ]
 
-IP = [
+IPinv = [
     40, 8, 48, 16, 56, 24, 64, 32,
     39, 7, 47, 15, 55, 23, 63, 31,
     38, 6, 46, 14, 54, 22, 62, 30,
@@ -465,17 +465,15 @@ def cipherFunc(right, key):
 
 
 def invPerm(msg):
-    return [msg[i-1] for i in IP]
+    return [msg[i-1] for i in IPinv]
 
 
 
 def DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16):
     # Init Perm
     messIP = initPerm(message)
-
-    # This line prevents weird formatting
-    messIP = ''.join(map(str, messIP))
-    #print("This is IP mess", messIP)
+    messIP = ''.join(map(str,messIP))
+    #print("initial perm val: ", messIP)
 
     # Now, split the messIP array in half..
     # Built this function for the keys, but works for message
@@ -564,23 +562,17 @@ def main():
 
     listofSub = [k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16]
 
+
+    # Debugging loop for key scheduler
+    # Comment out if you wanna save run time O(n)
     for i in range(len(listofSub)):
         listofSub[i] = ''.join(map(str, listofSub[i]))
-        print(f"subkey {i}: ", listofSub[i])
+        #print(f"subkey {i}: ", listofSub[i])
 
     # For now the secret message will be pre defined by the computer,
-    message = [
-    0, 0, 0, 1, 0, 0, 1, 1,
-    0, 0, 1, 1, 0, 1, 0, 0,
-    0, 1, 0, 1, 0, 1, 1, 1,
-    0, 1, 1, 1, 1, 0, 0, 1,
-    1, 0, 0, 1, 1, 0, 1, 1,
-    1, 0, 1, 1, 1, 1, 0, 0,
-    1, 1, 0, 1, 1, 1, 1, 1,
-    1, 1, 1, 1, 0, 0, 0, 1
-]
+    message = [0,0,0,0, 0,0,0,1, 0,0,1,0, 0,0,1,1, 0,1,0,0, 0,1,0,1, 0,1,1,0, 0,1,1,1, 1,0,0,0, 1,0,0,1, 1,0,1,0, 1,0,1,1, 1,1,0,0, 1,1,0,1, 1,1,1,0, 1,1,1,1]
     message = ''.join(map(str, message))
-    #print("Here is the user message: ", message)
+    print("Here is the user message: ", message)
 
     # I want to build the algorithm first, then add features such as user input, and 3DES. 
     cMes = DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16)
@@ -588,7 +580,7 @@ def main():
     cMes = ''.join(map(str, cMes))
 
 
-    #print("Encrypted Message", cMes)
+    print("Encrypted Message", cMes)
 
 
 if __name__ == "__main__":
