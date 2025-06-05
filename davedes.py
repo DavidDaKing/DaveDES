@@ -565,7 +565,29 @@ def DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k1
 
     return cMes
     
-    
+
+
+# String to binary conversion for user input
+
+def stringToBin(msg):
+    binary = msg.encode('utf-8')
+
+    intVal = int.from_bytes(binary, byteorder='big')
+    strVal = format(intVal, '064b')
+    #binary.zfill(64)
+    return strVal[-64:]
+
+
+def binToString(msg):
+    #make sure its passed in as a string
+    intVal = int(msg,2)
+
+    n = 8
+    byteVal = intVal.to_bytes(n, byteorder='big')
+
+    conv = byteVal.lstrip(b'\x00').decode('utf-8', errors='ignore')
+
+    return conv
 
 
 def main():
@@ -576,7 +598,7 @@ def main():
     #symmetricKey = ''.join(map(str, symmetricKey))
 
     #print("len key", len(symmetricKey))
-    print("Here is the generated symmetric key: ", ''.join(map(str,symmetricKey)))
+    #print("Here is the generated symmetric key: ", ''.join(map(str,symmetricKey)))
 
     # Additional keys may be generated for double or triple encryption...
     # calling key scheduler
@@ -598,10 +620,38 @@ def main():
 
     # I want to build the algorithm first, then add features such as user input, and 3DES. 
     cMes = DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16)
-
-    cMes = ''.join(map(str, cMes))
     
-    print("Encrypted Message", cMes)
+    print("Encrypted Message", ''.join(map(str,cMes)))
+
+    #Testing purposes: Does is decrypt? - TEST PASSED
+
+    dMes = DES(cMes, k16,k15,k14,k13,k12,k11,k10,k9,k8,k7,k6,k5,k4,k3,k2,k1)
+
+    if dMes == message:
+        print("test passed!")
+    
+
+    # User input section
+    '''
+    secret = input("Input your secret key: ")
+    secret = stringToBin(secret)
+
+    uMsg = input("Input the message you want to send: ")
+    uMsg = stringToBin(uMsg)
+
+    k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16 = keyScheduler(secret)
+
+    enc = DES(uMsg, k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16)
+    print("Encrypted message: ", ''.join(map(str,enc)))
+
+    # auto decrypt , moment of truth
+    dec = DES(enc, k16,k15,k14,k13,k12,k11,k10,k9,k8,k7,k6,k5,k4,k3,k2,k1)
+    dec = ''.join(map(str,dec))
+    dec = binToString(dec)
+    print("Decrypted message: ", dec)
+    '''
+    
+
 
 
 if __name__ == "__main__":
