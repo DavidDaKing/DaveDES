@@ -623,7 +623,7 @@ def main():
     
     print("Encrypted Message", ''.join(map(str,cMes)))
 
-    #Testing purposes: Does is decrypt? - TEST PASSED
+    #Testing purposes: Does it decrypt? - TEST PASSED
 
     dMes = DES(cMes, k16,k15,k14,k13,k12,k11,k10,k9,k8,k7,k6,k5,k4,k3,k2,k1)
 
