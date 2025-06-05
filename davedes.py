@@ -591,65 +591,80 @@ def binToString(msg):
 
 
 def main():
-    # This is the global, symmetric key.. All encryption and decryption for DES is done through here..
-    # assinged 64 bits - 5/30
-    symmetricKey = [0,0,0,1,0,0,1,1,0,0,1,1,0,1,0,0,0,1,0,1,0,1,1,1,0,1,1,1,1,0,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1,1,0,0,1,1,0,1,1,1,1,1,1,1,1,1,0,0,0,1]
-
-    #symmetricKey = ''.join(map(str, symmetricKey))
-
-    #print("len key", len(symmetricKey))
-    #print("Here is the generated symmetric key: ", ''.join(map(str,symmetricKey)))
-
-    # Additional keys may be generated for double or triple encryption...
-    # calling key scheduler
-    # subkeys defined here
-    k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16 = keyScheduler(symmetricKey)
-
-    listofSub = [k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16]
 
 
-    # Debugging loop for key scheduler
-    # Comment out if you wanna save run time O(n)
-   # for i in range(len(listofSub)):
-    #      print(f"subkey{i}: {''.join(map(str, listofSub[i]))}")
+    # Im gonna implement a user loop
+    uLoop = 0
+    while uLoop != 1:
 
-    # For now the secret message will be pre defined by the computer,
-    message = [0,0,0,0, 0,0,0,1, 0,0,1,0, 0,0,1,1, 0,1,0,0, 0,1,0,1, 0,1,1,0, 0,1,1,1, 1,0,0,0, 1,0,0,1, 1,0,1,0, 1,0,1,1, 1,1,0,0, 1,1,0,1, 1,1,1,0, 1,1,1,1]
-    #message = ''.join(map(str, message))
-    #print("Here is the user message: ", message)
+        # Show options
+        print("~~~~~~~~~~~~~")
+        print("1 : Run the Simulation")
+        print("0 : Exit DaveDES")
+        print("~~~~~~~~~~~~~")
+        uOption = int(input("Enter option here: "))
 
-    # I want to build the algorithm first, then add features such as user input, and 3DES. 
-    cMes = DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16)
+        if uOption == 0:
+            uLoop = 1
+
+        if uOption == 1:
+            # This is the global, symmetric key.. All encryption and decryption for DES is done through here..
+            # assinged 64 bits - 5/30
+            symmetricKey = [0,0,0,1,0,0,1,1,0,0,1,1,0,1,0,0,0,1,0,1,0,1,1,1,0,1,1,1,1,0,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1,1,0,0,1,1,0,1,1,1,1,1,1,1,1,1,0,0,0,1]
+
+            # Additional keys may be generated for double or triple encryption...
+            # calling key scheduler
+            # subkeys defined here
+            k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16 = keyScheduler(symmetricKey)
+
+            listofSub = [k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16]
+
+
+            # Debugging loop for key scheduler
+            # Comment out if you wanna save run time O(n)
+            # for i in range(len(listofSub)):
+            #      print(f"subkey{i}: {''.join(map(str, listofSub[i]))}")
+
+            # For now the secret message will be pre defined by the computer,
+            message = [0,0,0,0, 0,0,0,1, 0,0,1,0, 0,0,1,1, 0,1,0,0, 0,1,0,1, 0,1,1,0, 0,1,1,1, 1,0,0,0, 1,0,0,1, 1,0,1,0, 1,0,1,1, 1,1,0,0, 1,1,0,1, 1,1,1,0, 1,1,1,1]
+            #message = ''.join(map(str, message))
+            #print("Here is the user message: ", message)
+
+            # I want to build the algorithm first, then add features such as user input, and 3DES. 
+            cMes = DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16)
     
-    print("Encrypted Message", ''.join(map(str,cMes)))
+            print("Encrypted Message", ''.join(map(str,cMes)))
 
-    #Testing purposes: Does it decrypt? - TEST PASSED
+            #Testing purposes: Does it decrypt? - TEST PASSED
 
-    dMes = DES(cMes, k16,k15,k14,k13,k12,k11,k10,k9,k8,k7,k6,k5,k4,k3,k2,k1)
+            dMes = DES(cMes, k16,k15,k14,k13,k12,k11,k10,k9,k8,k7,k6,k5,k4,k3,k2,k1)
 
-    if dMes == message:
-        print("test passed!")
+            if dMes == message:
+                print("test passed!")
     
 
-    # User input section
-    '''
-    secret = input("Input your secret key: ")
-    secret = stringToBin(secret)
+        if uOption != 0 and uOption != 1:
+            print(f"{uOption} is not an option, try again.")
 
-    uMsg = input("Input the message you want to send: ")
-    uMsg = stringToBin(uMsg)
+        # User input section
+        '''
+        secret = input("Input your secret key: ")
+        secret = stringToBin(secret)
 
-    k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16 = keyScheduler(secret)
+        uMsg = input("Input the message you want to send: ")
+        uMsg = stringToBin(uMsg)
 
-    enc = DES(uMsg, k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16)
-    print("Encrypted message: ", ''.join(map(str,enc)))
+        k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16 = keyScheduler(secret)
 
-    # auto decrypt , moment of truth
-    dec = DES(enc, k16,k15,k14,k13,k12,k11,k10,k9,k8,k7,k6,k5,k4,k3,k2,k1)
-    dec = ''.join(map(str,dec))
-    dec = binToString(dec)
-    print("Decrypted message: ", dec)
-    '''
+        enc = DES(uMsg, k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16)
+        print("Encrypted message: ", ''.join(map(str,enc)))
+
+        # auto decrypt , moment of truth
+        dec = DES(enc, k16,k15,k14,k13,k12,k11,k10,k9,k8,k7,k6,k5,k4,k3,k2,k1)
+        dec = ''.join(map(str,dec))
+        dec = binToString(dec)
+        print("Decrypted message: ", dec)
+        '''
     
 
 
