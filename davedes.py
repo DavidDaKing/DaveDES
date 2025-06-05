@@ -501,6 +501,7 @@ def DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k1
     l1 = r0
     r1 = XOR(l0, cipherFunc(r0, k1))
 
+
     l2 = r1
     r2 = XOR(l1, cipherFunc(r1, k2))
 
@@ -546,15 +547,17 @@ def DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k1
     l16 = r15
     r16 = XOR(l15, cipherFunc(r15, k16))
 
+
     cMes = []
-    cMes += l16
     cMes += r16
+    cMes += l16
 
 
 
     # Inverse permutation time
     cMes = ''.join(map(str, cMes))
     cMes = invPerm(cMes)
+
     return cMes
     
     
@@ -594,7 +597,7 @@ def main():
 
     cMes = ''.join(map(str, cMes))
     
-    #print("Encrypted Message", cMes)
+    print("Encrypted Message", cMes)
 
 
 if __name__ == "__main__":
