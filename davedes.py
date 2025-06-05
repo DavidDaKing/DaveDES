@@ -550,20 +550,23 @@ def DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k1
 def main():
     # This is the global, symmetric key.. All encryption and decryption for DES is done through here..
     # assinged 64 bits - 5/30
-    symmetricKey = [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1,
-    0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1,
-    1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1,
-    1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1]
+    symmetricKey = [0,0,0,1,0,0,1,1,0,0,1,1,0,1,0,0,0,1,0,1,0,1,1,1,0,1,1,1,1,0,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1,1,0,0,1,1,0,1,1,1,1,1,1,1,1,1,0,0,0,1]
 
     symmetricKey = ''.join(map(str, symmetricKey))
 
-
+    #print("len key", len(symmetricKey))
     print("Here is the generated symmetric key: ", symmetricKey)
 
     # Additional keys may be generated for double or triple encryption...
     # calling key scheduler
     # subkeys defined here
     k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16 = keyScheduler(symmetricKey)
+
+    listofSub = [k1,k2,k3,k4,k5,k6,k7,k8,k9,k10,k11,k12,k13,k14,k15,k16]
+
+    for i in range(len(listofSub)):
+        listofSub[i] = ''.join(map(str, listofSub[i]))
+        print(f"subkey {i}: ", listofSub[i])
 
     # For now the secret message will be pre defined by the computer,
     message = [
@@ -577,7 +580,7 @@ def main():
     1, 1, 1, 1, 0, 0, 0, 1
 ]
     message = ''.join(map(str, message))
-    print("Here is the user message: ", message)
+    #print("Here is the user message: ", message)
 
     # I want to build the algorithm first, then add features such as user input, and 3DES. 
     cMes = DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16)
@@ -585,7 +588,7 @@ def main():
     cMes = ''.join(map(str, cMes))
 
 
-    print("Encrypted Message", cMes)
+    #print("Encrypted Message", cMes)
 
 
 if __name__ == "__main__":
