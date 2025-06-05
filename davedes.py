@@ -426,40 +426,55 @@ def perm32(msg):
 def cipherFunc(right, key):
     eRight = expandThis(right)
 
-    # debugging statements
-    #right = ''.join(map(str, right))
-    #eRight = ''.join(map(str, eRight))
-    #print("This is right", right)
-    #print("This is expanded", eRight)
-    
     # Xor the expanded right message w/ the key
     xRight = XOR(eRight, key)
 
-    # Selection process for each group of 6 bits of xRight
-    # Eight different selection tables, first bit and last bit determines row
-    # The middle four bits determine the col 
-    # So if the 6 bits are 101010 ROW: 10 = 2 COL: 0101 = 5
-    # If this was placed in the first table, the value is: 6
+    # Testing expansion function - TEST PASSED
+    testRight = [1,1,1,1, 0,0,0,0, 1,0,1,0, 1,0,1,0, 1,1,1,1, 0,0,0,0, 1,0,1,0, 1,0,1,0] 
+    expectRight = [0,1,1,1,1,0, 1,0,0,0,0,1, 0,1,0,1,0,1, 0,1,0,1,0,1, 0,1,1,1,1,0, 1,0,0,0,0,1, 0,1,0,1,0,1, 0,1,0,1,0,1]
 
-    #testVal = [0,1,1,0,0,0,0,1,0,0,0,1,0,1,1,1,1,0,1,1,1,0,1,0,1,0,0,0,0,1,1,0,0,1,1,0,0,1,0,1,0,0,1,0,0,1,1,1]
+    testRight = expandThis(testRight)
 
-    #testPls = selectionProc(testVal)
-    #testPls = ''.join(map(str,testPls))
+    #if testRight == expectRight:
+        #print("test passed")
 
-    #print("This is test", testPls)
+    # Testing XOR function - TEST PASSED
+    key = [0,0,0,1,1,0, 1,1,0,0,0,0, 0,0,1,0,1,1, 1,0,1,1,1,1, 1,1,1,1,1,1, 0,0,0,1,1,1, 0,0,0,0,0,1, 1,1,0,0,1,0]
 
-    #print("length of testVal", len(testVal))
-    #print("length of pls", len(testPls))
+    testOut = XOR(testRight, key)
+    expOut = [0,1,1,0,0,0, 0,1,0,0,0,1, 0,1,1,1,1,0, 1,1,1,0,1,0, 1,0,0,0,0,1, 1,0,0,1,1,0, 0,1,0,1,0,0, 1,0,0,1,1,1]
 
-    # This matches the documentation cited under references. 
+    #if testOut == expOut:
+        #print("test passed!")
 
     sRight = selectionProc(xRight)
     sRight = ''.join(map(str,sRight))
     #print(sRight)
-    
+
+    # Testing S selection process - PASSED
+
+    sTest = selectionProc(testOut)
+    sTest = ''.join(map(str,sTest))
+    expS = [0,1,0,1, 1,1,0,0, 1,0,0,0, 0,0,1,0, 1,0,1,1, 0,1,0,1, 1,0,0,1, 0,1,1,1]   
+    expS = ''.join(map(str,expS))
+
+    #if sTest == expS:
+        #print("test passed!")
     # Now that the selection process is done, the message needs to
     # Go through a 32-bit permutation
     sRight = perm32(sRight)
+
+    # Permutation test - PASSED
+    expPerm = [0,0,1,0, 0,0,1,1, 0,1,0,0, 1,0,1,0, 1,0,1,0, 1,0,0,1, 1,0,1,1, 1,0,1,1]
+    sTest = perm32(sTest)
+    sTest = ''.join(map(str,sTest))
+    #print(sTest)
+
+    expPerm = ''.join(map(str,expPerm))
+
+    #if sTest == expPerm:
+        #print("test passed")
+
 
     return sRight
 
@@ -578,9 +593,8 @@ def main():
     cMes = DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16)
 
     cMes = ''.join(map(str, cMes))
-
-
-    print("Encrypted Message", cMes)
+    
+    #print("Encrypted Message", cMes)
 
 
 if __name__ == "__main__":
