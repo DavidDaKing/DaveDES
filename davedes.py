@@ -567,8 +567,28 @@ def DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k1
     
 
 
-# String to binary conversion for user input
+# Plaintext to hexadecimal conversion for user input
+def plainHex(message):
+    hexRep = message.encode().hex()
+    return hexRep
 
+# Hexadecimal to binary conversion for user input
+def hexBin(message):
+    binRep = bitstring.BitArray(hex=message)
+    binRep = binRep.bin
+    return binRep
+
+
+# Requirements on keys? 
+
+# Pad and split the message
+def padSplitMes(message):
+    # First pad the message to be multiple of 64 bits
+    modChecker = len(message) % 64
+    if modChecker != 0:
+        toPad = (64 - (len(message) % 64)) % 64
+        message = message + '0' * toPad
+    return message
 
 def main():
 
@@ -626,17 +646,30 @@ def main():
 
         if uOption == 2:
             uSec = input("Enter a secret key: ")
-            print(uSec)
+            hexUSEC = plainHex(uSec)
             uMes = input("Enter the message: ")
-            print(uMes)
+            hexUMES = plainHex(uMes)
+            # Hex to binary Conversions
+            bUSEC = hexBin(hexUSEC)
+            bUMES = hexBin(hexUMES)
+
+            # Padding the message for splitting 
+            messPad = padSplitMes(bUMES)
+
+            
+
     
 
         if uOption != 0 and uOption != 1 and uOption != 2:
             print(f"{uOption} is not an option, try again.")
 
         # User input section
-    
-
+        """
+        User Input: 
+            - Translate from plaintext to hexadecimal for both the secret key and the message.
+            - Translate from hexadecimal to binary 
+        """
+        
 
 
 if __name__ == "__main__":
