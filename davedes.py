@@ -612,6 +612,7 @@ def main():
             # This is the global, symmetric key.. All encryption and decryption for DES is done through here..
             # assinged 64 bits - 5/30
             symmetricKey = [0,0,0,1,0,0,1,1,0,0,1,1,0,1,0,0,0,1,0,1,0,1,1,1,0,1,1,1,1,0,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1,1,0,0,1,1,0,1,1,1,1,1,1,1,1,1,0,0,0,1]
+            #print(len(symmetricKey))
 
             # Additional keys may be generated for double or triple encryption...
             # calling key scheduler
@@ -628,15 +629,13 @@ def main():
 
             # For now the secret message will be pre defined by the computer,
             message = [0,0,0,0, 0,0,0,1, 0,0,1,0, 0,0,1,1, 0,1,0,0, 0,1,0,1, 0,1,1,0, 0,1,1,1, 1,0,0,0, 1,0,0,1, 1,0,1,0, 1,0,1,1, 1,1,0,0, 1,1,0,1, 1,1,1,0, 1,1,1,1]
-            #message = ''.join(map(str, message))
-            #print("Here is the user message: ", message)
 
             # I want to build the algorithm first, then add features such as user input, and 3DES. 
             cMes = DES(message, k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16)
     
             print("Encrypted Message", ''.join(map(str,cMes)))
 
-            #Testing purposes: Does it decrypt? - TEST PASSED
+            # Testing purposes: Does it decrypt? - TEST PASSED
 
             dMes = DES(cMes, k16,k15,k14,k13,k12,k11,k10,k9,k8,k7,k6,k5,k4,k3,k2,k1)
 
@@ -653,10 +652,37 @@ def main():
             bUSEC = hexBin(hexUSEC)
             bUMES = hexBin(hexUMES)
 
+            # Would I need padding for the key?
+            # Yes, but it cannot produce more than 64 bits
+            keyPad = padSplitMes(bUSEC)
+            while len(keyPad) != 64:
+                uSec = input("We found that the key has exceeded its allocation of bits, please try again: ")
+                hexUSEC = plainHex(uSec)
+                bUSEC = hexBin(hexUSEC)
+                # Pad it again, else infinite loop. 
+                keyPad = padSplitMes(bUSEC)
+
             # Padding the message for splitting 
             messPad = padSplitMes(bUMES)
+            #print(messPad)
 
-            
+            # I want a list, each index is a 64-bit part of a message
+            # If the message is only 64 bits long, there is only one index
+            # Its already a multiple of 64
+            block = [messPad[i:i+64] for i in range(0, len(messPad), 64)]
+            #print(block)
+
+            # Run DES to encipher the blocks
+            cipherText = []
+
+            #key scheduler
+            ka,kb,kc,kd,ke,kf,kg,kh,ki,kj,kk,kl,km,kn,ko,kp = keyScheduler(keyPad)
+
+            for i in range(len(block)):
+                cipherText.append(DES(block[i], ka, kb, kc, kd, ke, kf, kg, kh, ki, kj, kk, kl, km, kn, ko, kp))
+
+            cipherText = ''.join(map(str, cipherText))
+            print(''.join(map(str, cipherText)))
 
     
 
